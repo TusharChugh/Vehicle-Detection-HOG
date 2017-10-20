@@ -23,9 +23,9 @@ The goals / steps of this project are the following:
 
 ### README
 
-###Histogram of Oriented Gradients (HOG)
+### Histogram of Oriented Gradients (HOG)
 
-####1. Extracting HOG features from the training images.
+#### 1. Extracting HOG features from the training images.
 
 The code for this step is contained in the first 12 code cells of the IPython notebook (vehicle_detection.ipnyb).  
 
@@ -42,24 +42,24 @@ Here is an example using the `YUV` color space and HOG parameters of `orientatio
 
 ![alt text][image2]
 
-####2. Final choice of HOG parameters.
+#### 2. Final choice of HOG parameters.
 
 I tried various combinations of parameters using the grid search and found that HOG channels encode most of the required features. The params gave a little more than 91% accuracy with the test. set. 
 Hist bins and color spacial bins are not that useful features. Increasing number of orientations add to more computation and it then takes more time to create the video. 
 
-####3. Training lassifier using the selected HOG features
-bb
+#### 3. Training lassifier using the selected HOG features
+
 I trained a linear SVM. The features were normalized using standard scaler from sklearn. The data was randomly shuffled and splitted into training and test sets 1/5 ratio. The code is in the 16th cell of the ipython notebook
 
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Overlap, scale, start-stop
+#### 1. Overlap, scale, start-stop
 
 I decided to search with small windows size in around the center of the image and with larger windows size at the bottom of the image (As the cars near the camera appear to be bigger in the image). The scales of 1, 1,5, 2, 2.5 and 3 were seleted to make the pipeline robust for different scales of the car. The overlap of 0.5 was selected to make the computation faster. 
 
 ![alt text][image3]
 
-####2. Example of working pipeline.  What did you do to optimize the performance of your classifier?
+#### 2. Example of working pipeline.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
@@ -68,11 +68,11 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 Here's a [link to my video result](./project_video.mp4)
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
@@ -92,9 +92,9 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
