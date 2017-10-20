@@ -46,6 +46,7 @@ Here is an example using the `YUV` color space and HOG parameters of `orientatio
 
 I tried various combinations of parameters using the grid search and found that HOG channels encode most of the required features. The params gave a little more than 91% accuracy with the test. set. 
 Hist bins and color spacial bins are not that useful features. Increasing number of orientations add to more computation and it then takes more time to create the video. 
+Not that 2nd (last channel - V) gives NaN output when getting the HOG output if the image is from 0-1. So, I had to scale the image to 0-255 to deal with this issue.
 
 #### 3. Training lassifier using the selected HOG features
 
@@ -55,24 +56,33 @@ I trained a linear SVM. The features were normalized using standard scaler from 
 
 #### 1. Overlap, scale, start-stop
 
-I decided to search with small windows size in around the center of the image and with larger windows size at the bottom of the image (As the cars near the camera appear to be bigger in the image). The scales of 1, 1,5, 2, 2.5 and 3 were seleted to make the pipeline robust for different scales of the car. The overlap of 0.5 was selected to make the computation faster. 
+I decided to search with small windows size in around the center of the image and with larger windows size at the bottom of the image (As the cars near the camera appear to be bigger in the image). The scales of 1, 1,5, 2, 2.5 and 3 were seleted to make the pipeline robust for different scales of the car. The overlap of 0.5 was selected to make the computation faster. Then the images were converted to a heatmap, on which a threshold was applied to remove the noises. Slides windows can be seen in the image below:
 
 ![alt text][image3]
 
+Here is the heatmap for the test images
+
+![alt text][image5]
+
+And the bounding boxes after thresholding looks like this:
+
+![alt text][image7]
+
+
 #### 2. Example of working pipeline.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched for all three 
 
 ![alt text][image4]
 ---
 
 ### Video Implementation
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+#### 1. Video Output
+Here's a [link to my video result][video1]
 
 
-#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Filters to remove false positive and combining rectangles
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
