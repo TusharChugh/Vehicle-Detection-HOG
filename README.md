@@ -17,6 +17,7 @@ The goals / steps of this project are the following:
 [image7]: ./results/output_images/output_bboxes.png
 [image8]: ./results/output_images/video_frame.png
 [image9]: ./results/output_images/colorspace_yuv.png
+[image10]: ./results/output_images/not_car.png
 [video1]: ./results/output_videos/project_video.mp4
 
 
@@ -31,6 +32,7 @@ The code for this step is contained in the first 12 code cells of the IPython no
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
+![alt text][image10]
 
 I then explored different color spaces. Different color spaces visualized in 3D space are shown below. YUV and YCrCb contain similar information. RGB, HSV, HSL have similar features for vehicle and non-vehicle images, so it is hard to create a classfier by using these color space. LUV is another good prospect but gave more error when used. Here is the visualization of the color spaces.
 
