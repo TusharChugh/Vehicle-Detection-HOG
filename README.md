@@ -16,7 +16,7 @@ The goals / steps of this project are the following:
 [image5]: ./results/output_images/bboxes_and_heat.png
 [image7]: ./results/output_images/output_bboxes.png
 [image8]: ./results/output_images/video_frame.png
-[image8]: ./results/output_images/colorspace_yuv.png
+[image9]: ./results/output_images/colorspace_yuv.png
 [video1]: ./results/output_videos/project_video.mp4
 
 
@@ -34,7 +34,7 @@ I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an 
 
 I then explored different color spaces. Different color spaces visualized in 3D space are shown below. YUV and YCrCb contain similar information. RGB, HSV, HSL have similar features for vehicle and non-vehicle images, so it is hard to create a classfier by using these color space. LUV is another good prospect but gave more error when used. Here is the visualization of the color spaces.
 
-![alt text][image8]
+![alt text][image9]
 Then different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
 Here is an example using the `YUV` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
