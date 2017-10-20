@@ -13,10 +13,9 @@ The goals / steps of this project are the following:
 [image1]: ./results/output_images/car_not_car.png
 [image2]: ./results/output_images/HOG_example.png
 [image3]: ./results/output_images/sliding_windows.png
-[image4]: ./results/output_images/sliding_window.png
 [image5]: ./results/output_images/bboxes_and_heat.png
-[image6]: ./results/output_images/labels_map.png
 [image7]: ./results/output_images/output_bboxes.png
+[image8]: ./results/output_images/video_frame.png
 [image8]: ./results/output_images/colorspace.png
 [video1]: ./results/output_videos/project_video.mp4
 
@@ -56,7 +55,7 @@ I trained a linear SVM. The features were normalized using standard scaler from 
 
 #### 1. Overlap, scale, start-stop
 
-I decided to search with small windows size in around the center of the image and with larger windows size at the bottom of the image (As the cars near the camera appear to be bigger in the image). The scales of 1, 1,5, 2, 2.5 and 3 were seleted to make the pipeline robust for different scales of the car. The overlap of 0.5 was selected to make the computation faster. Then the images were converted to a heatmap, on which a threshold was applied to remove the noises. Slides windows can be seen in the image below:
+I decided to search with small windows size in around the center of the image and with larger windows size at the bottom of the image (As the cars near the camera appear to be bigger in the image). The scales of 1, 1,5, 2, 2.5 and 3 were seleted to make the pipeline robust for different scales of the car. The overlap of 0.5 was selected to make the computation faster. Then the images were converted to a heatmap, on which a threshold was applied to remove the noises. Sliding windows can be seen in the image below:
 
 ![alt text][image3]
 
@@ -68,12 +67,6 @@ And the bounding boxes after thresholding looks like this:
 
 ![alt text][image7]
 
-
-#### 2. Example of working pipeline.  What did you do to optimize the performance of your classifier?
-
-Ultimately I searched for all three 
-
-![alt text][image4]
 ---
 
 ### Video Implementation
@@ -84,21 +77,18 @@ Here's a [link to my video result][video1]
 
 #### 2. Filters to remove false positive and combining rectangles
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of all detections in each frame. Then after every N (5) frames I did the following: 
+1. Created heatmap of individual frames
+2. Threshold heatmap of individual frames
+3. Combinate heatmap of all N (5) frame
+4. Threshold the accumulated heatmap. 
+5. Used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap and assumed each blob corresponded to a vehicle
+6. Constructed bounding boxes to cover the area of each blob detected. 
+
+All the frames are bboxes from the individual frames are inserted into queue and this way bboxes of last 5 frames are retained. This make the pipeline more robust. 
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
-
-### Here are six frames and their corresponding heatmaps:
-
-![alt text][image5]
-
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
-
+![alt text][image8]
 
 ---
 
@@ -106,5 +96,16 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Problems faces: 
+1. HOG gives NaN values for V (of YUV) channel. Need to scale images to 0-255 for this. 
+2. Tuning the hyperparameters is very uinteresting and time consuming
+
+Failures:
+1. Different lighting conditions like night or video from different weather conditions
+2. Tracking is not robust
+3. Doesn't work for small cars
+
+Next Steps to improve:
+1. Use kalman filter for tracking
+2. Use CNN for detection
 
