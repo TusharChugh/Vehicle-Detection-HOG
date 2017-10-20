@@ -47,7 +47,7 @@ Here is an example using the `YUV` color space and HOG parameters of `orientatio
 
 #### 2. Final choice of HOG parameters.
 
-I tried various combinations of parameters using the grid search and found that HOG channels encode most of the required features. The params gave a little more than 91% accuracy with the test. set. 
+I tried various combinations of parameters using the grid search and found that HOG channels encode most of the required features. The params gave a little more than 99% accuracy with the test. set. 
 Hist bins and color spacial bins are not that useful features. Increasing number of orientations add to more computation and it then takes more time to create the video. 
 Not that 2nd (last channel - V) gives NaN output when getting the HOG output if the image is from 0-1. So, I had to scale the image to 0-255 to deal with this issue.
 
@@ -59,7 +59,7 @@ I trained a linear SVM. The features were normalized using standard scaler from 
 
 #### 1. Overlap, scale, start-stop
 
-I decided to search with small windows size in around the center of the image and with larger windows size at the bottom of the image (As the cars near the camera appear to be bigger in the image). The scales of 1, 1,5, 2, 2.5 and 3 were seleted to make the pipeline robust for different scales of the car. The overlap of 0.5 was selected to make the computation faster. Then the images were converted to a heatmap, on which a threshold was applied to remove the noises. Sliding windows can be seen in the image below:
+I decided to search with small windows size in around the center of the image and with larger windows size at the bottom of the image (As the cars near the camera appear to be bigger in the image). The scales of 1, 1,5, 2, 2.5 and 3 were seleted to make the pipeline robust for different scales of the car. The overlap of 0.75 was selected to make the computation faster. Then the images were converted to a heatmap, on which a threshold was applied to remove the noises. Sliding windows can be seen in the image below:
 
 ![alt text][image3]
 
