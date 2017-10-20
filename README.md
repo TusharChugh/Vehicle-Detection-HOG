@@ -16,7 +16,7 @@ The goals / steps of this project are the following:
 [image5]: ./results/output_images/bboxes_and_heat.png
 [image7]: ./results/output_images/output_bboxes.png
 [image8]: ./results/output_images/video_frame.png
-[image8]: ./results/output_images/colorspace.png
+[image8]: ./results/output_images/colorspace_yuv.png
 [video1]: ./results/output_videos/project_video.mp4
 
 
@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 
 #### 1. Extracting HOG features from the training images.
 
-The code for this step is contained in the first 12 code cells of the IPython notebook (vehicle_detection.ipnyb).  
+The code for this step is contained in the first 12 code cells of the IPython notebook (vehicle_detection.ipnyb). 
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
